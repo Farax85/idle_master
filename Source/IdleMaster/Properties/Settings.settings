@@ -8,6 +8,9 @@
     <Setting Name="steamLogin" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="steamLoginSecure" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
     <Setting Name="myProfileURL" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
