@@ -64,11 +64,19 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -237,12 +245,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ban-2x.png" />
-    <EmbeddedResource Include="Resources\steam-idle.exe" />
     <None Include="Resources\Changelog.rtf" />
     <None Include="Resources\x-2x.png" />
     <None Include="Resources\cog-2x.png" />
     <None Include="Resources\check-2x.png" />
-    <EmbeddedResource Include="Resources\CSteamworks.dll" />
     <None Include="Resources\power-standby-2x.png" />
     <None Include="Resources\info-2x.png" />
     <None Include="Resources\media-pause-2x.png" />
@@ -251,7 +257,6 @@
     <None Include="Resources\media-step-forward.png" />
     <None Include="Resources\media-play.png" />
     <None Include="Resources\media-pause.png" />
-    <EmbeddedResource Include="Resources\steam_api.dll" />
     <None Include="Resources\select2-spinner.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +292,44 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rmdir languages  /S /Q
+
+mkdir languages
+move cs languages\
+move de languages\
+move el languages\
+move es languages\
+move fi languages\
+move fr languages\
+move hu languages\
+move it languages\
+move ja languages\
+move ko languages\
+move nl languages\
+move no languages\
+move pl languages\
+move pt languages\
+move pt-BR languages\
+move ro languages\
+move ru languages\
+move sv languages\
+move th languages\
+move tr languages\
+move uk languages\
+move zh languages\
+move zh-TW languages\
+
+if $(ConfigurationName) == Release del *.pdb
+if $(ConfigurationName) == Release del *.xml
+
+copy "..\..\..\..\steam_api.dll" /Y
+copy "..\..\..\..\steam-idle Source\steam-idle\bin\Release\steam-idle.exe" /Y</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
