@@ -240,5 +240,17 @@ namespace IdleMaster.Properties {
                 this["OneThenMany"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        public int SimultaneousIdleTime {
+            get {
+                return ((int)(this["SimultaneousIdleTime"]));
+            }
+            set {
+                this["SimultaneousIdleTime"] = value;
+            }
+        }
     }
 }

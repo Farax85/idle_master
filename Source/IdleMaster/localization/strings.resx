@@ -270,7 +270,7 @@ your Steam account.</value>
     <value>Idle Master Settings</value>
   </data>
   <data name="idle_simultaneous" xml:space="preserve">
-    <value>Idle games simultaneously up to 2 hours, then individually</value>
+    <value>Idle games simultaneously up to {0:0.##} hours, then individually</value>
   </data>
   <data name="idling_behavior" xml:space="preserve">
     <value>Idling Behavior</value>
@@ -339,6 +339,9 @@ your Steam account.</value>
     <value>Validating...</value>
   </data>
   <data name="idle_onethenmany" xml:space="preserve">
-    <value>Idle games with more than 2 hours individually, then simultaneously</value>
+    <value>Idle games with more than {0:0.##} hours individually, then simultaneously</value>
+  </data>
+  <data name="simultaneous_idle_time" xml:space="preserve">
+    <value>Simultaneous idle time (minutes)</value>
   </data>
 </root>

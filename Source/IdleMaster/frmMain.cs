@@ -39,6 +39,11 @@ namespace IdleMaster
         public int GamesRemaining { get { return CanIdleBadges.Count(); } }
         public Badge CurrentBadge;
 
+        private int GetSimultaneousIdleTime()
+        {
+            return Settings.Default.SimultaneousIdleTime > 60 ? Settings.Default.SimultaneousIdleTime : 60;
+        }
+
         internal void UpdateStateInfo()
         {
             // Update totals
@@ -92,10 +97,10 @@ namespace IdleMaster
                         }
                         AllBadges = AllBadges.OrderByDescending(b => b.AveragePrice).ToList();
                     }
-                    catch  
+                    catch
                     {
 
-                    }                    
+                    }
                     break;
                 default:
                     return;
@@ -106,10 +111,12 @@ namespace IdleMaster
         {
             foreach (var badge in CanIdleBadges.Where(b => !Equals(b, CurrentBadge)))
             {
-                if (badge.HoursPlayed >= 2 && badge.InIdle)
+                double simultaneousIdleTime = GetSimultaneousIdleTime() / 60;
+
+                if (badge.HoursPlayed >= simultaneousIdleTime && badge.InIdle)
                     badge.StopIdle();
 
-                if (badge.HoursPlayed < 2 && CanIdleBadges.Count(b => b.InIdle) < 30)
+                if (badge.HoursPlayed < simultaneousIdleTime && CanIdleBadges.Count(b => b.InIdle) < 30)
                     badge.Idle();
             }
 
@@ -158,7 +165,7 @@ namespace IdleMaster
         {
             // Kill all existing processes before starting any new ones
             // This prevents rogue processes from interfering with idling time and slowing card drops
-            try 
+            try
             {
                 String username = WindowsIdentity.GetCurrent().Name;
                 foreach (var process in Process.GetProcessesByName("steam-idle"))
@@ -178,14 +185,14 @@ namespace IdleMaster
                             }
                         }
                     }
-                    
+
                 }
             }
             catch (Exception)
             {
 
             }
-            
+
             // Check if user is authenticated and if any badge left to idle
             // There should be check for IsCookieReady, but property is set in timer tick, so it could take some time to be set.
             if (string.IsNullOrWhiteSpace(Settings.Default.sessionid) || !IsSteamReady)
@@ -209,9 +216,10 @@ namespace IdleMaster
                     }
                     else
                     {
+                        double simultaneousIdleTime = GetSimultaneousIdleTime() / 60;
                         if (Settings.Default.OneThenMany)
                         {
-                            var multi = CanIdleBadges.Where(b => b.HoursPlayed >= 2);
+                            var multi = CanIdleBadges.Where(b => b.HoursPlayed >= simultaneousIdleTime);
                             if (multi.Count() >= 1)
                             {
                                 StartSoloIdle(multi.First());
@@ -223,7 +231,7 @@ namespace IdleMaster
                         }
                         else
                         {
-                            var multi = CanIdleBadges.Where(b => b.HoursPlayed < 2);
+                            var multi = CanIdleBadges.Where(b => b.HoursPlayed < simultaneousIdleTime);
                             if (multi.Count() >= 2)
                             {
                                 StartMultipleIdle();
@@ -233,8 +241,8 @@ namespace IdleMaster
                                 StartSoloIdle(CanIdleBadges.First());
                             }
                         }
-                        
-                        
+
+
                     }
                 }
                 else
@@ -679,8 +687,8 @@ namespace IdleMaster
                         language_string = "en";
                         break;
                 }
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(language_string);                
-            }            
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(language_string);
+            }
 
             // Localize form elements
             fileToolStripMenuItem.Text = localization.strings.file;
@@ -701,7 +709,7 @@ namespace IdleMaster
             lnkResetCookies.Text = "(" + localization.strings.sign_out + ")";
             toolStripStatusLabel1.Text = localization.strings.next_check;
             toolStripStatusLabel1.ToolTipText = localization.strings.next_check;
-            
+
             lblSignedOnAs.Text = localization.strings.signed_in_as;
             GamesState.Columns[0].Text = localization.strings.name;
             GamesState.Columns[1].Text = localization.strings.hours;
@@ -862,7 +870,8 @@ namespace IdleMaster
                     await LoadBadgesAsync();
                     UpdateIdleProcesses();
 
-                    isMultipleIdle = CanIdleBadges.Any(b => b.HoursPlayed < 2 && b.InIdle);
+                    double simultaneousIdleTime = GetSimultaneousIdleTime() / 60;
+                    isMultipleIdle = CanIdleBadges.Any(b => b.HoursPlayed < simultaneousIdleTime && b.InIdle);
                     if (isMultipleIdle)
                         TimeLeft = 360;
                 }
@@ -938,7 +947,7 @@ namespace IdleMaster
             {
                 lblSignedOnAs.Text = SteamProfile.GetSignedAs();
                 lblSignedOnAs.Visible = Settings.Default.showUsername;
-            }            
+            }
         }
 
         private void pauseIdlingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1036,7 +1045,7 @@ namespace IdleMaster
         {
             ReloadCount = ReloadCount + 1;
             lblDrops.Text = localization.strings.badge_didnt_load.Replace("__num__", (10 - ReloadCount).ToString());
-            
+
             if (ReloadCount == 10)
             {
                 tmrBadgeReload.Enabled = false;

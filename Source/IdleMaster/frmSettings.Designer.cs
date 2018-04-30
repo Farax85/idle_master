@@ -49,12 +49,17 @@ namespace IdleMaster
             this.ttHints = new System.Windows.Forms.ToolTip(this.components);
             this.btnAdvanced = new System.Windows.Forms.Button();
             this.grpIdlingQuantity = new System.Windows.Forms.GroupBox();
+            this.numSimultaneousIdleTime = new System.Windows.Forms.NumericUpDown();
+            this.radOneThenMany = new System.Windows.Forms.RadioButton();
+            this.lblSimultaneousTime = new System.Windows.Forms.Label();
             this.radManyThenOne = new System.Windows.Forms.RadioButton();
             this.radOneGameOnly = new System.Windows.Forms.RadioButton();
-            this.radOneThenMany = new System.Windows.Forms.RadioButton();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.grpGeneral.SuspendLayout();
             this.grpPriority.SuspendLayout();
             this.grpIdlingQuantity.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSimultaneousIdleTime)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpGeneral
@@ -158,7 +163,7 @@ namespace IdleMaster
             this.grpPriority.Controls.Add(this.radIdleLeastDrops);
             this.grpPriority.Controls.Add(this.radIdleMostDrops);
             this.grpPriority.Controls.Add(this.radIdleDefault);
-            this.grpPriority.Location = new System.Drawing.Point(13, 210);
+            this.grpPriority.Location = new System.Drawing.Point(13, 239);
             this.grpPriority.Name = "grpPriority";
             this.grpPriority.Size = new System.Drawing.Size(392, 92);
             this.grpPriority.TabIndex = 1;
@@ -216,7 +221,7 @@ namespace IdleMaster
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(330, 311);
+            this.btnCancel.Location = new System.Drawing.Point(330, 346);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -227,7 +232,7 @@ namespace IdleMaster
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(249, 311);
+            this.btnOK.Location = new System.Drawing.Point(249, 346);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 3;
@@ -239,7 +244,7 @@ namespace IdleMaster
             // 
             this.btnAdvanced.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAdvanced.Image = global::IdleMaster.Properties.Resources.imgLock;
-            this.btnAdvanced.Location = new System.Drawing.Point(12, 311);
+            this.btnAdvanced.Location = new System.Drawing.Point(12, 346);
             this.btnAdvanced.Name = "btnAdvanced";
             this.btnAdvanced.Size = new System.Drawing.Size(25, 23);
             this.btnAdvanced.TabIndex = 4;
@@ -251,6 +256,7 @@ namespace IdleMaster
             // 
             this.grpIdlingQuantity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpIdlingQuantity.Controls.Add(this.flowLayoutPanel1);
             this.grpIdlingQuantity.Controls.Add(this.radOneThenMany);
             this.grpIdlingQuantity.Controls.Add(this.radManyThenOne);
             this.grpIdlingQuantity.Controls.Add(this.radOneGameOnly);
@@ -258,10 +264,56 @@ namespace IdleMaster
             this.grpIdlingQuantity.Margin = new System.Windows.Forms.Padding(2);
             this.grpIdlingQuantity.Name = "grpIdlingQuantity";
             this.grpIdlingQuantity.Padding = new System.Windows.Forms.Padding(2);
-            this.grpIdlingQuantity.Size = new System.Drawing.Size(392, 80);
+            this.grpIdlingQuantity.Size = new System.Drawing.Size(392, 110);
             this.grpIdlingQuantity.TabIndex = 5;
             this.grpIdlingQuantity.TabStop = false;
             this.grpIdlingQuantity.Text = "Idling Behavior";
+            // 
+            // numSimultaneousIdleTime
+            // 
+            this.numSimultaneousIdleTime.Location = new System.Drawing.Point(165, 3);
+            this.numSimultaneousIdleTime.Maximum = new decimal(new int[] {
+            1440,
+            0,
+            0,
+            0});
+            this.numSimultaneousIdleTime.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numSimultaneousIdleTime.Name = "numSimultaneousIdleTime";
+            this.numSimultaneousIdleTime.Size = new System.Drawing.Size(46, 20);
+            this.numSimultaneousIdleTime.TabIndex = 8;
+            this.numSimultaneousIdleTime.Value = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numSimultaneousIdleTime.ValueChanged += new System.EventHandler(this.numSimultaneousIdleTime_ValueChanged);
+            this.numSimultaneousIdleTime.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numSimultaneousIdleTime_KeyUp);
+            this.numSimultaneousIdleTime.Leave += new System.EventHandler(this.numSimultaneousIdleTime_Leave);
+            // 
+            // radOneThenMany
+            // 
+            this.radOneThenMany.AutoSize = true;
+            this.radOneThenMany.Location = new System.Drawing.Point(7, 53);
+            this.radOneThenMany.Name = "radOneThenMany";
+            this.radOneThenMany.Size = new System.Drawing.Size(338, 17);
+            this.radOneThenMany.TabIndex = 6;
+            this.radOneThenMany.TabStop = true;
+            this.radOneThenMany.Text = "Idle games with more than 2 hours individually, then simultaneously";
+            this.radOneThenMany.UseVisualStyleBackColor = true;
+            // 
+            // lblSimultaneousTime
+            // 
+            this.lblSimultaneousTime.AutoSize = true;
+            this.lblSimultaneousTime.Location = new System.Drawing.Point(3, 5);
+            this.lblSimultaneousTime.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            this.lblSimultaneousTime.Name = "lblSimultaneousTime";
+            this.lblSimultaneousTime.Size = new System.Drawing.Size(156, 13);
+            this.lblSimultaneousTime.TabIndex = 7;
+            this.lblSimultaneousTime.Text = "Simultaneous idle time (minutes)";
             // 
             // radManyThenOne
             // 
@@ -288,16 +340,14 @@ namespace IdleMaster
             this.radOneGameOnly.Text = "Idle each game individually";
             this.radOneGameOnly.UseVisualStyleBackColor = true;
             // 
-            // radOneThenMany
+            // flowLayoutPanel1
             // 
-            this.radOneThenMany.AutoSize = true;
-            this.radOneThenMany.Location = new System.Drawing.Point(7, 53);
-            this.radOneThenMany.Name = "radOneThenMany";
-            this.radOneThenMany.Size = new System.Drawing.Size(338, 17);
-            this.radOneThenMany.TabIndex = 6;
-            this.radOneThenMany.TabStop = true;
-            this.radOneThenMany.Text = "Idle games with more than 2 hours individually, then simultaneously";
-            this.radOneThenMany.UseVisualStyleBackColor = true;
+            this.flowLayoutPanel1.Controls.Add(this.lblSimultaneousTime);
+            this.flowLayoutPanel1.Controls.Add(this.numSimultaneousIdleTime);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(20, 76);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(366, 27);
+            this.flowLayoutPanel1.TabIndex = 9;
             // 
             // frmSettings
             // 
@@ -305,7 +355,7 @@ namespace IdleMaster
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(417, 346);
+            this.ClientSize = new System.Drawing.Size(417, 381);
             this.Controls.Add(this.grpIdlingQuantity);
             this.Controls.Add(this.btnAdvanced);
             this.Controls.Add(this.btnOK);
@@ -324,6 +374,9 @@ namespace IdleMaster
             this.grpPriority.ResumeLayout(false);
             this.grpIdlingQuantity.ResumeLayout(false);
             this.grpIdlingQuantity.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSimultaneousIdleTime)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -349,5 +402,8 @@ namespace IdleMaster
     private ComboBox cboLanguage;
     private Label lblLanguage;
     private RadioButton radOneThenMany;
-  }
+        private NumericUpDown numSimultaneousIdleTime;
+        private Label lblSimultaneousTime;
+        private FlowLayoutPanel flowLayoutPanel1;
+    }
 }

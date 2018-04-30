@@ -19,7 +19,7 @@ namespace IdleMaster.localization {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class strings {
@@ -300,7 +300,7 @@ namespace IdleMaster.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Idle games with more than 2 hours individually, then simultaneously.
+        ///   Looks up a localized string similar to Idle games with more than {0:0.##} hours individually, then simultaneously.
         /// </summary>
         internal static string idle_onethenmany {
             get {
@@ -309,7 +309,7 @@ namespace IdleMaster.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Idle games simultaneously up to 2 hours, then individually.
+        ///   Looks up a localized string similar to Idle games simultaneously up to {0:0.##} hours, then individually.
         /// </summary>
         internal static string idle_simultaneous {
             get {
@@ -611,6 +611,15 @@ namespace IdleMaster.localization {
         internal static string signed_in_as {
             get {
                 return ResourceManager.GetString("signed_in_as", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Simultaneous idle time (minutes).
+        /// </summary>
+        internal static string simultaneous_idle_time {
+            get {
+                return ResourceManager.GetString("simultaneous_idle_time", resourceCulture);
             }
         }
         
