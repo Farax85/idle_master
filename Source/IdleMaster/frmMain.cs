@@ -735,7 +735,7 @@ namespace IdleMaster
 
         private void tmrCheckCookieData_Tick(object sender, EventArgs e)
         {
-            var connected = !string.IsNullOrWhiteSpace(Settings.Default.sessionid) && !string.IsNullOrWhiteSpace(Settings.Default.steamLogin);
+            var connected = !string.IsNullOrWhiteSpace(Settings.Default.sessionid) && !string.IsNullOrWhiteSpace(Settings.Default.steamLoginSecure);
 
             lblCookieStatus.Text = connected ? localization.strings.idle_master_connected : localization.strings.idle_master_notconnected;
             lblCookieStatus.ForeColor = connected ? Color.Green : Color.Black;

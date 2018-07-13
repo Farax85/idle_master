@@ -33,7 +33,7 @@ namespace IdleMaster
                 // Maybe this shoud be done other way (authenticate exception), but because of shared settings and timers in frmMain...
                 if (cookies.Count > 0)
                 {
-                    if (cookies["steamLogin"] != null && cookies["steamLogin"].Value == "deleted")
+                    if (cookies["steamLoginSecure"] != null && cookies["steamLoginSecure"].Value == "deleted")
                     {
                         Settings.Default.sessionid = string.Empty;
                         Settings.Default.steamLogin = string.Empty;
@@ -70,8 +70,8 @@ namespace IdleMaster
 
         public static string GetSteamMachineAuthCookieName()
         {
-            if (Settings.Default.steamLogin != null && Settings.Default.steamLogin.Length > 17)
-                return string.Format("steamMachineAuth{0}", Settings.Default.steamLogin.Substring(0, 17));
+            if (Settings.Default.steamLoginSecure != null && Settings.Default.steamLoginSecure.Length > 17)
+                return string.Format("steamMachineAuth{0}", Settings.Default.steamLoginSecure.Substring(0, 17));
             return "steamMachineAuth";
         }
 
